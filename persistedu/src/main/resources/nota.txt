@@ -1,0 +1,7 @@
+Notas importantes:
+
+Usando o h2:
+
+jdbc:h2:mem:testdb
+
+http://localhost:8080/h2-console
