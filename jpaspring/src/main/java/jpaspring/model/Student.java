@@ -10,7 +10,6 @@ public class Student {
 	private String email; // atributo email
 
 	
-	
 	public long getId() {
 		return id;
 	}
