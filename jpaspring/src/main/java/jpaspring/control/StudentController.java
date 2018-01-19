@@ -4,6 +4,7 @@ package jpaspring.control;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.web.bind.annotation.PathVariable;
@@ -101,14 +102,33 @@ public class StudentController {
 	// método permite buscar/filtrar item pelo atributo "name"
 	//@SuppressWarnings("unlikely-arg-type")
 	@RequestMapping(value = "/", params = "filterName", method = RequestMethod.GET)
-	public String buscar(@RequestParam("filterName") String filterName) {
+	public List<String> buscar(@RequestParam("filterName") String filterName) {
 		
-		if(students.containsValue(filterName)) {
-			return "contem para - " + filterName;
-		} else {
-			return "não contem para - " + filterName;
+		List<String> result = new ArrayList<String>(); // armazenando em lista resultado da pesquisa de cada objeto Student
+		
+		Student student = new Student(); // criando objeto para trabalharmos com cada objeto da lista Map
+		
+		// laço para varrer todos os itens da lista, visando procurar por parametro informado
+		for(int i = 1; i <= students.size(); i++) {
+			
+			student = students.get(i); // setando objeto individualmente para posterior comparação do For
+			
+			if(student.getName().contains(filterName)) { //verificação se o valor name do objeto corresponde ao valor do parametro informado
+				
+				// informando resultado positivo da busca
+				result.add("Encontrado fragmento de texto para " + filterName + " (name) no objeto de índice: " + i);
+			
+			} else {
+			
+				// informando resultado negativo da busca
+				result.add("Nenhum fragmento de texto encontrato para " + filterName + " (name) no objeto de índice: " + i);
+			
+			}
+			
 		}
 		
-	}
+		return result;
+	  
+	} // final do método buscar
 	
 } // final da classe StudentController
