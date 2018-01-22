@@ -13,7 +13,7 @@ public class StudentNullPointerException extends NullPointerException{
 	public StudentNullPointerException(String msg) {
 		super(msg);
 		
-		throw new StudentNullPointerException("Índice excluído");
+		throw new StudentNullPointerException("ÍNDICE EXCLUÍDO");
 
 	}
 
