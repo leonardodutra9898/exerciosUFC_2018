@@ -21,40 +21,28 @@ public class StudentManager {
 		if((!existKey((int) student.getId())) && (totalItens() == counter)) { 
 			
 				students.put((totalItens() + 1), student); 
-				
-			  //System.out.print("se não existir a Key na lista repassada e o total de itens na lista é igual ao contador geral \n\n");
 			
 			} else if((!existKey((int) student.getId())) && 
 					(totalItens() < counter) && 
 						(student.getId() <= counter)) {
 				
-					// identificar a Key excluida
-					
+					students.put((int) student.getId(), student); 
 				
-				students.put((int) student.getId(), student); 
-				
+					// verificando se acumulador não tá zerado
 					if(getCumulateCountStudents() > 0) {
 						
 						setCumulateCountStudents(-1);
 						
-					}
-					
+					} 
 				
-				//System.out.print("se a Key foi excluida na lista repassada e o total de itens na lista é menor que o contador geral. DEVE TER TIDO EXCLUSÃO\n\n");	
-				
-			} else {
+			} else { // adicionando novo item a lista
 				
 				students.put((int) student.getId(), student); 
 				
-				//setCumulateCountStudents(1);
-				
-				//System.out.print("situação em que tem exclusões, mas se quer adicionar itens no final \n\n");
-				
-			}
+			} // FINAL - adicionando novo item a lista
 
-		}
+		} // final do método save
 	
-	//falta tratar melhor o contador geral e fazer com ele se atualize de acordo com o checador de Keys existentes ou não
 	
 	public void delete(int Key) {
 		
@@ -70,19 +58,19 @@ public class StudentManager {
 					students.remove(Key);
 					setCumulateCountStudents(-1);
 					
-				} else {
+				} else { // removendo a Key atual e a anterior
 					
 					students.remove(Key);
 					students.remove(Key - 1);
 					setCumulateCountStudents(-2);
 					
-				}
+				} // FINAL - // removendo a Key atual e a anterior
 				
 			} else { // quando a Key passada é menor que o acumulador, ou seja, item do meio da lista ou inicio
 				
 				students.remove(Key);
 				
-			}
+			} // FINAL - quando a Key passada é menor que o acumulador, ou seja, item do meio da lista ou inicio
 			
 		} else { // quando a Key já foi excluida, mas ficou espaço livre sob efeito do contador
 			
@@ -98,57 +86,53 @@ public class StudentManager {
 						students.remove(Key);
 						setCumulateCountStudents(-1);
 						
-					} else {
+					} else { // removendo key atual e a anterior
 						
 						students.remove(Key);
 						students.remove(Key - 1);
 						setCumulateCountStudents(-2);
 						
-					}
+					} // FINAL - removendo key atual e a anterior
 					
 				} else { // quando a Key passada é menor que o acumulador, ou seja, item do meio da lista ou inicio
 					
 					students.remove(Key);
 					
-				}
+				} // FINAL - quando a Key passada é menor que o acumulador, ou seja, item do meio da lista ou inicio
 				
 			} else { // quando não há itens na lista
 				
 				System.out.print("Sem itens a excluir");
 				
-			}
+			} // FINAL - quando não há itens na lista
 			
-		}
+		} // FINAL - quando a Key já foi excluida, mas ficou espaço livre sob efeito do contador
 
-	}
+	} // final do método delete
 	
+	
+	// método para atualizar valores da lista
 	public void update(int Key, Student student) {
+		
 		student.setId((long) Key); // setando ID para efetuar edição em seguida
 		
 		if(existKey(Key)) {
 			students.put(Key, student); // recolocando novo objeto na mesma posição
 		}
 		
-	}
+	} // final do método update
 	
 	
+	// método para retornar todos os itens da lista
 	public Collection<Student> listAll(){
 		
 		return students.values();  // retorno da lista contendo objetos do tipo Student
 	
-	}
+	} // final do método listAll
 	
-	public Student viewByKey(int Key) {
-		
-		if(existKey(Key)) {
-			return students.get(Key); // retornando o item de lista, após filtrar por ID
-		}else {
-			return null;
-		}
-		
+
 	
-	}
-	
+	// método para filtro/pesquisa na lista, através de parametro passado
 	public List<String> search(String filter, int counterList){
 		
 		Student student = new Student(); // criando objeto para trabalharmos com cada objeto da lista Map
@@ -187,60 +171,89 @@ public class StudentManager {
 
 			} // final do laço For que varre todos os índices da lista
 			
-		}
-		result.add("Total contador: " + counterList);
-		result.add("total itens obtido da lista: " + totalItens());
-		
-			for(int x = 1; x <= counterList; x++) {
-				result.add("key" + x + " (existe) [" + obtainValueKey(x) + "]: " + existKey(x));
-			}
-		
+		} // final do bloco else, quando a lista possui itens
+
 		return result; // retorno dos resultados obtidos até aqui nas buscas da lista
 		
-	}
+// para auxiliar em testes		
+//		result.add("Total contador: " + counterList);
+//		result.add("total itens obtido da lista: " + totalItens());
+		
+//			for(int x = 1; x <= counterList; x++) {
+//				result.add("key" + x + " (existe) [" + obtainValueKey(x) + "]: " + existKey(x));
+//			}
+	} // final do método search
 	
+	
+	// método retorna contagem atual do acumulador auxiliar da lista
 	public int getCumulateCountStudents() {
+		
 		return cumulateCountStudents;
-	}
+	
+	} // final do método getCumulateCountStudents
 
 
+	// método para manipular valores do acumulador auxiliar da lista
 	public void setCumulateCountStudents(int cumulateCountStudents) {
+		
 		this.cumulateCountStudents += cumulateCountStudents;
-	}	
+	
+	} // final do método setCumulateCountStudents
 	
 	
+	// método verifica se key repassada existe na lista
 	public boolean existKey(int Key) {
 		
 		if(students.containsKey(Key)) { // verifica se existe item naquele ID passado
+			
 			return true;
+			
 		} else {
+			
 			return false;
+			
 		} // final da verificação se existe ID naquela lista
 		
-	}
+	} // final do método existKey
 	
 	
+	// método para obter valor colocado naquela Key
 	public Student obtainValueKey(int Key) {
 		
 		if(students.containsKey(Key)) { // verifica se existe item naquele ID passado
+			
 			return students.get(Key);
+			
 		} else {
+			
 			return null;
+			
 		} // final da verificação se existe ID naquela lista
 		
-	}	
+	} // final do método obtainValueKey	
 	
 	
+	// método para verificar se a lista está vazia
 	public boolean listIsEmpty() {
+		
 		if(students.isEmpty()) {
+			
 			return true;
+			
 		}else {
+			
 			return false;
+			
 		}
-	}
+		
+	} // final do método listIsEmpty
 	
+	
+	// método para retornar total de itens atualmente inseridos na lista
 	public int totalItens() {
+		
 		return students.size();
-	}
+		
+	} // final do método totalItens
 	
 }

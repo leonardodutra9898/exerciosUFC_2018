@@ -72,7 +72,7 @@ public class StudentController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public Student viewStudent(@PathVariable int id) {
 		
-		return studentManager.viewByKey(id); // retornando o item de lista, após filtrar por ID
+		return studentManager.obtainValueKey(id); // retornando o item de lista, após filtrar por ID
 		
 	} // final do método viewStudent
 	
