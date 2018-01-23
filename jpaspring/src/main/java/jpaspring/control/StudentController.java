@@ -26,16 +26,14 @@ import jpaspring.model.Student;
 public class StudentController {
 
 	StudentManager studentManager = new StudentManager();
-	
-	private int cumulateCountStudents = 0; // contador geral da lista
-	
+
 	// método que adiciona item à lista students
 	@RequestMapping(method = RequestMethod.POST)
 	public void addStudent(@RequestBody Student student) {
 				
-		studentManager.save(student, cumulateCountStudents); // continua adicionando itens na lista
+		studentManager.save(student, studentManager.getCumulateCountStudents()); // continua adicionando itens na lista
 				
-		cumulateCountStudents += 1; // adicionando valor no contador da lista
+		studentManager.setCumulateCountStudents(+1); // adicionando valor no contador da lista
 		
 	} // final do método addStudent
 	
@@ -45,6 +43,8 @@ public class StudentController {
 	public void removeStudent(@PathVariable("id") long id) {
 		
 		studentManager.delete((int) id); // remove item da lista com base no índice
+		
+		//setCumulateCountStudents(-1);
 		
 	} // final do método removeStudent
 	
@@ -82,8 +82,10 @@ public class StudentController {
 	@RequestMapping(value = "/", params = "filterName", method = RequestMethod.GET)
 	public List<String> searchStudent(@RequestParam("filterName") String filterName) {
 		
-		return studentManager.search(filterName, cumulateCountStudents);
+		return studentManager.search(filterName, studentManager.getCumulateCountStudents());
 	  
 	} // final do método searchStudent
+	
+	
 	
 } // final da classe StudentController
