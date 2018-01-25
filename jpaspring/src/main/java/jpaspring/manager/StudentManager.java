@@ -76,29 +76,14 @@ public class StudentManager {
 			
 			// quando ainda há itens na lista
 			if(totalItens() > 0) {
-				
-				// quando a Key a ser excluida é igual ao acumulador, indicando que é o ultimo item da lista
-				if(Key == getCumulateCountStudents()) {
-					
-					// verificando também se o item anterior a este não está excluido e que necessite ser removido do contador
-					if(existKey(Key - 1)) { 
 						
-						students.remove(Key);
-						setCumulateCountStudents(-1);
+						// loop para ir verificando itens vazios e aplicar remoção
+						do {
 						
-					} else { // removendo key atual e a anterior
+							students.remove(Key);
+							setCumulateCountStudents(-1);
 						
-						students.remove(Key);
-						students.remove(Key - 1);
-						setCumulateCountStudents(-2);
-						
-					} // FINAL - removendo key atual e a anterior
-					
-				} else { // quando a Key passada é menor que o acumulador, ou seja, item do meio da lista ou inicio
-					
-					students.remove(Key);
-					
-				} // FINAL - quando a Key passada é menor que o acumulador, ou seja, item do meio da lista ou inicio
+						}while(!existKey(Key-1));
 				
 			} else { // quando não há itens na lista
 				
