@@ -20,8 +20,6 @@ public class StudentManager {
 			
 				students.put(student.getId(), student); 
 				setCounter(+1);
-				
-				System.out.println("count: " + getCounter());
 			
 			} 
 
@@ -32,8 +30,6 @@ public class StudentManager {
 
 		students.remove(key);
 		setCounter(-1);
-
-		System.out.println("count: " + counter);
 		
 	} 
 	
